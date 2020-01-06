@@ -1,0 +1,212 @@
+<script>
+    productGroups = { 
+            'adult-mint': {
+                'title': 'Mint Infused Set',
+                'products': [
+                    {
+                        'title': 'Annual Plan',
+                        'recurring-text': 'Delivered every 2 months',
+                        'data': {{ all_products['grin-cool-mint-toothpaste-toothbrush-set-annual'] | json }},
+                        'subscription': {{all_products['grin-cool-mint-toothpaste-toothbrush-set-annual'].metafields.subscriptions | json}}
+                    },
+                    {
+                        'title': 'Bimonthly Plan',
+                        'recurring-text': 'Delivered every 2 months',
+                        'data': {{ all_products['grin-cool-mint-toothpaste-toothbrush-set-bi-monthly'] | json }},
+                        'subscription': {{all_products['grin-cool-mint-toothpaste-toothbrush-set-bi-monthly'].metafields.subscriptions | json }}
+                    },
+                    {
+                        'title': 'Single Purchase',
+                        'recurring-text': 'One off purchase',
+                        'data': {{ all_products['grin-cool-mint-toothpaste-toothbrush-set'] | json }},
+                        'subscription': {{all_products['grin-cool-mint-toothpaste-toothbrush-set'].metafields.subscriptions| json }}
+                    }
+                ]
+            },
+            'adult-whitening': {
+                'title': 'Whitening Set',
+                'products': [
+                    {
+                        'title': 'Annual Plan',
+                        'recurring-text': 'Delivered every 2 months',
+                        'data': {{ all_products['grin-whitening-toothpaste-toothbrush-set-annual'] | json }},
+                        'subscription': {{all_products['grin-whitening-toothpaste-toothbrush-set-annual'].metafields.subscriptions | json}}
+                    },
+                    {
+                        'title': 'Bimonthly Plan',
+                        'recurring-text': 'Delivered every 2 months',
+                        'data': {{ all_products['grin-whitening-toothpaste-toothbrush-set-bi-monthly'] | json }},
+                        'subscription': {{all_products['grin-whitening-toothpaste-toothbrush-set-bi-monthly'].metafields.subscriptions | json}}
+                    },
+                    {
+                        'title': 'Single Purchase',
+                        'recurring-text': 'One off purchase',
+                        'data': {{ all_products['grin-whitening-toothpaste-toothbrush-set'] | json }},
+                        'subscription': {{all_products['grin-whitening-toothpaste-toothbrush-set'].metafields.subscriptions | json}}
+                    }
+                ]
+            }
+        };
+
+    window.addEventListener('load', function () {
+        GrinSubscription.init(productGroups);
+    });
+
+</script>
+<h1 class="page-title subscription-page-title">{{ page.title }}</h1>
+
+  <div class="subscription-page-desc">
+    {{ page.content }}
+  </div>
+
+<h2 class="subscription-set-title">Adult Essentials</h2>
+<div class="subscription-set">
+    <div class="subscription-group loading" data-group="adult-mint">
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">Mint Infused Set</div>
+       
+    </div>
+
+
+    <div class="subscription-group" data-group="adult-whitening">
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">Whitening Set</div>
+    </div>
+</div>
+
+<h2 class="subscription-set-title">Kids Essentials</h2>
+<div class="subscription-set">
+    <div class="subscription-group">
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">Orange Infused Set</div>
+    </div>
+
+
+    <div class="subscription-group">
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">Strawberry Infused Set</div>
+    </div>
+</div>
+
+<h2 class="subscription-set-title">Family Essentials</h2>
+<div class="subscription-set">
+    <div class="subscription-group">
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">2 Adults + 2 Kids</div>
+    </div>
+
+
+    <div class="subscription-group">
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">2 Adults + 4 Kids</div>
+    </div>
+</div>
+
+{% raw %}
+<script type="text/x-handlebars-template" id="product-group-template">
+    <div class="subscription-group" data-group="{{id}}">
+        <div class="subscription-group-img subscription-group-row">
+            {{{productImage selected}}}
+        </div>
+        <div class="subscription-group-name subscription-group-row">{{title}}</div>
+
+        {{#with selected}}
+            <form class="subscription-group-product" data-image="{{data.featured_image}}" data-product-id="{{data.id}}">
+               
+                <div class="subscription-group-plans subscription-group-row"">
+                    {{#each siblings}}
+                        <span class="subscription-group-plan {{cssClass title}} {{productSelectedClass this}}" data-product-id="{{data.id}}" data-group-id="{{groupId}}">{{title}}</span>
+                    {{/each}}
+                </div>
+
+                <div class="subscription-group-swatches subscription-group-row"">
+                    <div class="subscription-group-swatch-name">{{selectedVariant.title}}</div>
+                    <div class="subscription-group-swatches-items">
+                        {{#each data.variants}}
+                            <span class="subscription-group-swatch {{cssClass title}} {{variantSelectedClass this}}" data-colour-label="{{title}}" data-variant-id="{{id}}"></span>
+                        {{/each}}
+                    </div>
+                </div>
+
+                <div class="subscription-group-summary subscription-group-row"">
+                    <div class="subscription-group-total">
+                        <span class="subscription-group-total-value">${{formatPrice data.price}}</span> Today
+                    </div>
+                    <span>|</span>
+                    <div class="subscription-group-frequency">{{recurring-text}}</div>
+                </div>
+                <div class="subscription-group-actions">
+                    <button class="action button-addto" data-product-id="{{data.id}}"><span class="icon-plus">+</span><span>Cart</span><span class="add-to-cart-loader"></span></button>
+                </div>
+
+
+               {% comment %} <div id="rc_container" class="rc_subscription-only" style="display: block;">
+        <input type="hidden" name="properties[subscription_id]" id="rc_subscription_id" value="92430">
+        <input type="hidden" name="properties[shipping_interval_unit_type]" id="rc_shipping_interval_unit_type" value="Months">
+        <select id="rc_duplicate_selector" data-productid="257370652683" class="styled replaced no-js" style="display: none;" name="id">
+            
+                <option value="2176209551371">2176209551371</option>
+            
+                <option value="2176209584139">2176209584139</option>
+            
+                <option value="2176209616907">2176209616907</option>
+            
+        </select>
+        
+        <div class="rc_block rc_block__type rc_block__type__autodeliver" style="display: none;">
+            <input type="radio" id="rc_purchase_type_autodeliver" name="purchase_type" data-productid="257370652683" value="autodeliver" checked="" style="display: none;" class="rc_radio rc_radio__autodeliver">
+            
+            <div id="rc_autodeliver_options" class="rc_block rc_block__type__options">
+                
+                    <label for="rc_shipping_interval_frequency" class="rc_label rc_label__deliver_every">
+                        <span class="rc_label__delivery">Deliver every</span>
+                        <span class="rc_label__frequency">
+                            2
+                            
+                                Months
+                            
+                        </span>
+                    </label>
+                    <input type="hidden" name="properties[shipping_interval_frequency]" id="rc_shipping_interval_frequency" data-productid="257370652683" value="2">
+                
+            </div>
+        </div>
+        <div class="rc_popup">
+            
+                <div class="rc_popup__hover">
+                    
+                        <img src="//rechargestatic-bootstrapheroes.netdna-ssl.com/static/images/widget/rc_widget__icon__black@2x.png" height="21" width="18" class="rc_popup__icon"> 
+                    
+                    Subscription details
+                    <div class="rc_popup__block">
+                        <div class="rc_popup__block__content">
+                            <div class="rc_popup__close" style="display: none;">x</div>
+                            <strong>How subscriptions work</strong><br><br>Products are automatically delivered on your schedule. No obligation, modify or cancel your subscription anytime.
+                            
+                                <br><a href="http://rechargepayments.com/subscribe-with-recharge?utm_source=shopify%20store&amp;utm_medium=customer%20link&amp;utm_campaign=Shopify%20store%20back%20link&amp;shop_name=Grin%20Development&amp;shop=grin-development.myshopify.com" target="_blank">Learn more...</a>
+                            
+                        </div>
+                        
+                            <div class="rc_popup__block__footer">
+                                <a href="http://rechargepayments.com/subscribe-with-recharge?utm_source=shopify%20store&amp;utm_medium=customer%20link&amp;utm_campaign=Shopify%20store%20back%20link&amp;shop_name=Grin%20Development&amp;shop=grin-development.myshopify.com" target="_blank">
+                                    <img src="//rechargestatic-bootstrapheroes.netdna-ssl.com/static/images/widget/rc_widget__banner@2x.png" height="28" width="153" class="rc_popup__badge">
+                                </a>
+                            </div>
+                        
+                    </div>
+                </div>
+            
+        </div>
+    </div>{% endcomment %}
+            </form>
+        {{/with}}
+
+    </div>
+</script>
+{% endraw %}

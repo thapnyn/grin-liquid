@@ -1,0 +1,23 @@
+{% comment %}
+  DO NOT MODIFY THIS FILE DIRECTLY. THIS FILE WILL BE OVERWRITTEN.
+  YOU CAN MODIFY THE LIQUID CODE FOR THIS CUSTOM FIELD HERE:
+  https://customfields.bonify.io/dashboard/grin-natural.myshopify.com/pages/configure/96627/edit
+{% endcomment %}
+{% if page.metafields.custom_fields["text_segment"] != blank %}
+  <div class="custom-field custom-field__text-segment custom-field__type--field-collection">
+    <h3 class="custom-field--title">Text Segment</h3>
+    <div class="custom-field--value">
+      {% assign separator = "|###|" %}
+      {% assign text_array = page.metafields.custom_fields["text"] | split: separator %}
+      {% assign fc_keys = page.metafields.custom_fields["text_segment"] | split: "," %}
+      {% for i in fc_keys %}
+        {% assign index = i | plus: 0 %}
+        <div class="fc-item fc-item--text block fc-index--{{ index }}">
+          <div class="fc-field field__text">
+            {{ text_array[index] }}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

@@ -1,0 +1,27 @@
+{% comment %}
+  DO NOT MODIFY THIS FILE DIRECTLY. THIS FILE WILL BE OVERWRITTEN.
+  YOU CAN MODIFY THE LIQUID CODE FOR THIS CUSTOM FIELD HERE:
+  https://customfields.bonify.io/dashboard/grin-natural.myshopify.com/pages/configure/96629/edit
+{% endcomment %}
+{% if page.metafields.custom_fields["accordion_segment"] != blank %}
+  <div class="custom-field custom-field__accordion-segment custom-field__type--field-collection">
+    <h3 class="custom-field--title">Accordion Segment</h3>
+    <div class="custom-field--value">
+      {% assign separator = "|###|" %}
+      {% assign title_array = page.metafields.custom_fields["title"] | split: separator %}
+      {% assign body_array = page.metafields.custom_fields["body"] | split: separator %}
+      {% assign fc_keys = page.metafields.custom_fields["accordion_segment"] | split: "," %}
+      {% for i in fc_keys %}
+        {% assign index = i | plus: 0 %}
+        <div class="fc-item fc-item--item fc-index--{{ index }}">
+          <div class="fc-field field__title">
+            {{ title_array[index] }}
+          </div>
+          <div class="fc-field field__body">
+            {{ body_array[index] }}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

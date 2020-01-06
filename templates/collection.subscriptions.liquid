@@ -1,0 +1,342 @@
+<div class="subscription-banner"></div>
+
+<div class ="subscription-banner-text"><h5>All our subscriptions are shipped free!</h5></div>
+{% capture collectionDescription %}
+  {% if collection.description != blank and settings.collection-show-description %}
+    <div class="subscription-page-desc">
+      {{ collection.description }}
+    </div>
+  {% endif %}
+{% endcapture %}
+
+  <h1 class="page-title subscription-page-title">{{ collection.title }}</h1>
+  {{ collectionDescription }}
+
+
+<script>
+  productData = [];
+  {% for product in collection.products %}
+    productData['{{product.handle}}'] = {};
+    productData['{{product.handle}}']['data'] = {{ product | json }};
+    productData['{{product.handle}}']['subscription'] = {{ product.metafields.subscriptions | json }};
+      var sub_variants = {};
+      {% for variant in product.variants %}
+        {% if variant.metafields.subscriptions.discount_variant_id %}
+            sub_variants['{{variant.id}}'] = {{ variant.metafields.subscriptions | json  }};
+        {% endif %}
+      {% endfor %}
+      productData['{{product.handle}}']['subscription_variants'] = sub_variants;
+  {% endfor %}
+</script>
+
+
+
+<script>
+    productGroups = { 
+            'adult-mint': {
+                'title': 'Grin Cool Mint and Charcoal Infused Toothbrush Set',
+                'products': {
+                    'grin-cool-mint-toothpaste-toothbrush-set-bi-monthly': {
+                        'title': 'Pay Bi-Monthly',
+                        'payfrequency': 'Bi-Monthly',
+                        'subitems' : '2 x paste, 1 x brush'
+                    },
+                    'grin-cool-mint-toothpaste-toothbrush-set-annual': {
+                        'title': 'Pay Yearly',
+                        'payfrequency': 'Yearly',
+                        'subitems' : '2 x paste, 1 x brush'
+                    }
+                }
+            },
+            'adult-whitening-set': {
+                'title': 'Grin Whitening and Charcoal Infused Toothbrush Set',
+                'products': {
+                    'grin-whitening-toothpaste-toothbrush-set-bi-monthly': {
+                        'title': 'Pay Bi-Monthly',
+                        'payfrequency': 'Bi-Monthly',
+                        'subitems' : '2 x paste, 1 x brush'
+                    },
+                    'grin-whitening-toothpaste-toothbrush-set-annual': {
+                        'title': 'Pay Yearly',
+                         'payfrequency': 'Yearly',
+                         'subitems' : '2 x paste, 1 x brush'
+                    }
+                }
+            },
+            'kids-strawberry-set': {
+                'title': 'Kids Strawberry Set',                
+                'products': {
+                    'grin-kids-strawberry-toothpaste-toothbrush-set-bi-monthly': {
+                        'title': 'Pay Bi-Monthly',
+                        'payfrequency': 'Bi-Monthly',
+                        'subitems' : '2 x paste, 1 x brush'
+                    },
+                    'grin-kids-strawberry-toothpaste-toothbrush-set-annual': {
+                        'title': 'Pay Yearly',
+                        'payfrequency': 'Yearly',
+                        'subitems' : '2 x paste, 1 x brush'
+                    }
+                }
+            },
+            'kids-orange-set': {
+                'title': 'Kids Orange Set',
+                'products': {
+                    'grin-kids-orange-toothpaste-toothbrush-set-bi-monthly': {
+                        'title': 'Pay Bi-Monthly',
+                        'payfrequency': 'Bi-Monthly',
+                        'subitems' : '2 x paste, 1 x brush'
+                    },
+                    'grin-kids-orange-toothpaste-toothbrush-set-annual': {
+                        'title': 'Pay Yearly',
+                        'payfrequency': 'Yearly',
+                        'subitems' : '2 x paste, 1 x brush'
+                    }
+                }
+            },
+            '2-adults-2-kids': {
+                'title': '2 Adults + 2 Kids',                
+                'products': {
+                    '2-adults-2-kids-bi-monthly': {
+                        'title': 'Pay Bi-Monthly',
+                        'payfrequency': 'Bi-Monthly',
+                        'subitems' : '8 x paste, 4 x brush'
+                    },
+                    '2-adults-2-kids-annual': {
+                        'title': 'Pay Yearly',
+                        'payfrequency': 'Yearly',
+                        'subitems' : '8 x paste, 4 x brush'
+                    }
+                }
+            },
+            '2-adults-4-kids': {
+                'title': '2 Adults + 4 Kids',
+                'products': {
+                    '2-adults-4-kids-bi-monthly': {
+                        'title': 'Pay Bi-Monthly',
+                        'payfrequency': 'Bi-Monthly',
+                        'subitems' : '12 x paste, 6 x brush'
+                    },
+                    '2-adults-4-kids-annual': {
+                        'title': 'Pay Yearly',
+                        'payfrequency': 'Yearly',
+                        'subitems' : '12 x paste, 6 x brush'
+                    }
+                }
+            },
+            'whitening-toothpaste': {
+                'title': 'Whitening Toothpaste',
+                'products': {
+                    'grin-whitening-toothpaste-bi-monthly': {
+                        'title': 'Pay Bi-Monthly',
+                        'payfrequency': 'Bi-Monthly',
+                        'subitems' : '2 x paste'
+                    },
+                    'grin-whitening-toothpaste-annual': {
+                        'title': 'Pay Yearly',
+                        'payfrequency': 'Yearly',
+                        'subitems' : '2 x paste'
+                    }
+                }
+            },
+            'mint-toothpaste': {
+                'title': 'Cool Mint 100% Natural Toothpaste',
+                'products': {
+                    'grin-cool-mint-toothpaste-bi-monthly': {
+                        'title': 'Pay Bi-Monthly',
+                        'payfrequency': 'Bi-Monthly',
+                        'subitems' : '2 x paste'
+                    },
+                    'grin-cool-mint-toothpaste-annual': {
+                        'title': 'Pay Yearly',
+                        'payfrequency': 'Yearly',
+                        'subitems' : '2 x paste'
+                    }
+                }
+            },
+            'adult-brush': {
+                'title': 'Charcoal Infused Biodegradable Brush',
+                'products': {
+                    'grin-100-biodegradable-brush-bi-monthly': {
+                        'title': 'Pay Bi-Monthly',
+                        'payfrequency': 'Bi-Monthly',
+                        'subitems' : '1 x brush'
+                    },
+                    'grin-100-biodegradable-brush-annual': {
+                        'title': 'Pay Yearly',
+                        'payfrequency': 'Yearly',
+                        'subitems' : '1 x brush'
+                    }
+                }
+            },
+            'kids-brush': {
+                'title': 'GRRR-IN! Kids Biodegradable Brush',
+                'products': {
+                    'grrr-in-kids-biodegradable-brush-bi-monthly': {
+                        'title': 'Pay Bi-Monthly',
+                        'payfrequency': 'Bi-Monthly',
+                        'subitems' : '1 x brush'
+                    },
+                    'grrr-in-kids-biodegradable-brush-annual': {
+                        'title': 'Pay Yearly',
+                        'payfrequency': 'Yearly',
+                        'subitems' : '1 x brush'
+                    }
+                }
+            },
+{% comment %}
+            'kids-brush': {
+                'title': 'GRRR-IN! Kids Biodegradable Brush',
+                'products': {
+                    'grrr-in-kids-biodegradable-brush-annual': {
+                        'title': 'Pay Yearl'
+                    },
+                    'grrr-in-kids-biodegradable-brush-bi-monthly': {
+                        'title': 'Pay Bi-Monthly'
+                    }
+                }
+            },
+{% endcomment %}
+        };
+    window.addEventListener('load', function () {
+        GrinSubscription.init(productGroups, productData);
+    });
+
+</script>
+<h1 class="page-title subscription-page-title">{{ page.title }}</h1>
+
+  <div class="subscription-page-desc">
+    {{ page.content }}
+  </div>
+
+<h2 class="subscription-set-title">Adult Essentials</h2>
+<div class="subscription-set">
+    <div class="subscription-group loading" data-group="adult-mint">
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">Mint Infused Set</div>
+       
+    </div>
+
+
+    <div class="subscription-group" data-group="adult-whitening-set">
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">Whitening Set</div>
+    </div>
+
+</div>
+
+<h2 class="subscription-set-title">Kids Essentials</h2>
+<div class="subscription-set">
+    <div class="subscription-group" data-group='kids-orange-set'>
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">Orange Infused Set</div>
+    </div>
+
+
+    <div class="subscription-group" data-group='kids-strawberry-set'>
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">Strawberry Infused Set</div>
+    </div>
+</div>
+
+<h2 class="subscription-set-title">Family Essentials</h2>
+<div class="subscription-set">
+    <div class="subscription-group" data-group="2-adults-2-kids">
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">2 Adults + 2 Kids</div>
+    </div>
+
+
+    <div class="subscription-group" data-group="2-adults-4-kids">
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">2 Adults + 4 Kids</div>
+    </div>
+</div>
+
+<h2 class="subscription-set-title">Individual Items</h2>
+<div class="subscription-set">
+
+
+
+    <div class="subscription-group" data-group="whitening-toothpaste">
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">Whitening 100% Natural Toothpaste</div>
+    </div>
+
+    <div class="subscription-group" data-group="mint-toothpaste">
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">Cool Mint 100% Natural Toothpaste</div>
+    </div>
+
+    <div class="subscription-group" data-group="adult-brush">
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">Charcoal Infused Biodegradable Brush</div>
+    </div>
+    <div class="subscription-group" data-group="kids-brush">
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">GRRR-IN! Kids Biodegradable Brush</div>
+    </div>
+
+{% raw %}
+<script type="text/x-handlebars-template" id="product-group-template">
+    <div class="subscription-group" data-group="{{id}}">
+        <div class="subscription-group-img subscription-group-row">
+            {{{productImage selected}}}
+        </div>
+        <div class="subscription-group-name subscription-group-row">{{title}}</div>
+
+        {{#with selected}}
+            <form class="subscription-group-product" data-image="{{data.featured_image}}" data-product-id="{{data.handle}}">
+                <div class="subscription-group-plans subscription-group-row"">
+                    {{#each siblings}}
+                        <span class="subscription-group-plan {{cssClass title}} {{productSelectedClass this}}" data-product-id="{{data.handle}}" data-group-id="{{groupId}}">{{title}}</span>
+                    {{/each}}
+                </div>
+
+                <div class="subscription-group-swatches subscription-group-row {{showSwatchClass data.variants}}">
+                    <div class="subscription-group-swatch-name">{{selectedVariant.title}}</div>
+                    <div class="subscription-group-swatches-items">
+                        {{#each data.variants}}
+                            <span class="subscription-group-swatch {{instockClass available}} {{cssClass title}} {{variantSelectedClass this}}" data-colour-label="{{title}}" data-variant-id="{{id}}"></span>
+                        {{/each}}
+                    </div>
+                </div>
+
+                <div class="subscription-group-summary subscription-group-row"">
+                    <div class="subscription-group-total">
+                        <span class="subscription-group-total-value">${{formatPrice data.price}}</span> {{payfrequency}}
+                    </div>
+                    <span>|</span>
+                    <div class="subscription-group-frequency">{{subitems}} {{{recurringText this}}}</div>
+                </div>
+                <div class="subscription-group-actions">
+                    {{#selectedVariant}}
+                      {{#available}}
+                        <button class="action button-addto"><span class="icon-plus">+</span><span>Cart</span><span class="add-to-cart-loader"></span><span class="add-to-cart-added"><span class="icon-tick"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" version="1.1">
+                                                                                                                                                                                                             <g id="surface1">
+                                                                                                                                                                                                             <path style=" " d="M 19.28125 5.28125 L 9 15.5625 L 4.71875 11.28125 L 3.28125 12.71875 L 8.28125 17.71875 L 9 18.40625 L 9.71875 17.71875 L 20.71875 6.71875 Z "></path>
+                                                                                                                                                                                                             </g>
+                                                                                                                                                                                                             </svg></span>Added</span></button>
+                      {{/available}}
+
+                      {{^available}}
+                          <div class="subscription-group-row unavailable-notice">Product is currently unavailable</div>
+                      {{/available}}
+                    {{/selectedVariant}}
+                </div>
+            </form>
+        {{/with}}
+
+    </div>
+</script>
+{% endraw %}
+

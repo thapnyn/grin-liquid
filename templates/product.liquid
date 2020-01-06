@@ -1,0 +1,326 @@
+{% assign selectedVariant = product.selected_or_first_available_variant | default: product %}
+
+<div itemscope itemtype="http://schema.org/Product">
+  <h1 class="page-title" itemprop="name">{{ product.title }}</h1>
+
+  <div class="product-details mobile">
+    {% if settings.product-display-vendor %}
+      <p class="meta vendor">{{ product.vendor }}</p>
+    {% endif %}
+    <p class="product-price">
+      <span class="price product-{{product.id}}">
+        <span class="money">{{ selectedVariant.price | money }}</span>
+
+        {% unless product.variants.size == 1 and product.compare_at_price_min <= selectedVariant.price %}
+          <span class="original money">
+            {% if selectedVariant.compare_at_price > selectedVariant.price %}
+              {{ selectedVariant.compare_at_price | money }}
+            {% endif %}
+          </span>
+        {% endunless %}
+      </span>
+    </p>
+  </div>
+
+  {% assign featured_image = selectedVariant.featured_image | default: product.featured_image %}
+  <div class="product-slideshow clearfix">
+    <div class="product-big-image" data-no-image-svg="{{ 'no-image.svg' | asset_url }}" data-no-image-png="{{ 'no-image.png' | asset_url }}">
+      <span class="product-slideshow-loader"></span>
+      {% if product.images.size > 0 %}
+        <img itemprop="image" alt="{{ featured_image.alt }}" src="{{ featured_image | img_url: 'master' }}" />
+      {% else %}
+        <img class="product-no-images" src="{{ 'no-image.svg' | asset_url }}" alt="No Image Available" onerror="this.src='{{'no-image.png' | asset_url}}';this.onerror=null;" />
+      {% endif %}
+
+      {% if settings.product-enable-zoom %}<div class="product-image-zoom"></div>{% endif %}
+    </div>
+
+    {% if product.images.size > 1 %}
+    <div class="product-thumbnails">
+      {% for image in product.images %}
+        <img alt="{{ image.alt }}" data-high-res="{{ image | product_img_url: 'master' }}" src="{{ image | product_img_url: 'thumb' }}" class="{% if image == featured_image %}active{% endif %}">
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="product-wrap">
+
+    <div class="product-details">
+      {% if settings.product-display-vendor %}
+        <p class="meta vendor" itemprop="brand">{{ product.vendor }}</p>
+      {% endif %}
+      <p class="product-price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+        <span class="price product-{{product.id}}" itemprop="price">
+          <span class="money">{{ selectedVariant.price | money }}</span>
+
+          {% unless product.variants.size == 1 and product.compare_at_price_min <= selectedVariant.price %}
+            <span class="original money">
+              {% if selectedVariant.compare_at_price > selectedVariant.price %}
+                {{ selectedVariant.compare_at_price | money }}
+              {% endif %}
+            </span>
+          {% endunless %}
+        </span>
+      </p>
+      <div><span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span></div>
+    </div>
+
+    <form class="product-form" action="/cart/add" data-productid="{{product.id}}" method="post"> 
+      {% if product.available %}{% include 'subscription-product' %}{% endif %} 
+
+      {% if product.variants.size > 1 %}
+        <div class="product-options">
+          <select name="id" data-productid="{{product.id }}" id="product-select" class="product-select">
+            {% for variant in product.variants %}
+              <option {% if variant == selectedVariant %} selected="selected" {% endif %} value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      {% else %}
+        <input type="hidden" name="id" data-productid="{{product.id }}" class="product-select" value="{{ product.variants[0].id }}" data-variant-title="{{ product.variants[0].title }}" />
+      {% endif %}
+		
+      <div id="infiniteoptions-container"></div>
+
+      <div class="input-wrapper product-quantity">
+        <label for="quantity">{{ 'general.quantity' | t }}</label>
+        <input type="text" name="quantity" id="quantity" value="1" />
+      </div>
+
+      <div class="add-to-cart">
+        {% if product.available %}
+          <div class="product-form-submit-wrap">
+            <input type="submit" value="{{ 'products.product.add_to_cart' | t }}" />
+            <div class="add-to-cart-loader"></div>
+          </div>
+          {% capture cart_link %}
+            <a href="/cart">{{ 'products.product.cart_link' | t }}</a>
+          {% endcapture %}
+          {% capture continue_link %}
+            <a href="/collections/all">{{ 'products.product.continue_link' | t }}</a>
+          {% endcapture %}
+          {% capture checkout_link %}
+            <a href="/checkout">{{ 'products.product.checkout_link' | t }}</a>
+          {% endcapture %}
+          {% capture product_item %}
+            <span class='added-product-name'></span>
+          {% endcapture %}
+          <p class="product-add-success-message">{{ 'products.product.success_html' | t: cart_link: cart_link, continue_link: continue_link, checkout_link: checkout_link, product: product_item  }}</p>
+          <p class="product-add-error-message"></p>
+        {% else %}
+          <input type="button" class="disabled" disabled="disabled" value="{{ 'products.product.sold_out' | t }}" />
+        {% endif %}
+      </div>
+      
+ </form>  
+   <div class="input-wrapper product-quantity">
+  		<ul class="tabs">
+    		<li><a href="#tab-1">Product Description</a></li>
+    		<li><a href="#tab-2">Reviews</a></li>
+            {% if product.handle.size > 0 %}
+    			{% if pages[product.handle].content.size > 0 %}
+              		<li><a href="#tab-3">Ingredients</a></li>
+          		{% endif %}
+    		{% endif %}
+            {% if product.handle contains 'toothpaste' %}
+    			{% if pages["taste-profile-adult"].content.size > 0 or pages["taste-profile-kids"].content.size > 0 %}
+              		<li><a href="#tab-4">Taste Profile</a></li>
+          		{% endif %}
+    		{% endif %}
+            
+
+  		</ul>
+  		<div id="tab-1">
+      		{% if product.description.size > 0 %}
+    			<div class="product-description rte" itemprop="description">
+      				{{ product.description }}
+    			</div>
+    		{% endif %}
+  		</div>
+  		<div id="tab-2">
+  			<div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+  		</div>
+        <div id="tab-3">
+      		{% if product.handle.size > 0 %}
+    			{% if pages[product.handle].content.size > 0 %}
+              		<div class="product-description rte" itemprop="description">
+          				{{ pages[product.handle].content }} 
+                    </div>
+          		{% endif %}
+    		{% endif %}
+        </div>
+        <div id="tab-4">
+      		{% if product.handle contains 'cool-mint-natural' %}
+    			{% if pages["taste-profile-adult"].content.size > 0 %}
+              		<div class="product-description rte" itemprop="description">
+          				{{ pages["taste-profile-adult"].content }} 
+                    </div>
+          		{% endif %}
+             {% elsif product.handle contains 'kids-natural' %}
+    			{% if pages["taste-profile-kids"].content.size > 0 %}
+              		<div class="product-description rte" itemprop="description">
+          				{{ pages["taste-profile-kids"].content }} 
+                    </div>
+          		{% endif %}
+          	{% elsif product.handle contains 'whitening-toothpaste' %}
+    			{% if pages["taste-profile-whitening"].content.size > 0 %}
+              		<div class="product-description rte" itemprop="description">
+          				{{ pages["taste-profile-whitening"].content }} 
+                    </div>
+          		{% endif %}
+    		{% endif %}
+        </div>
+	</div>
+
+  </div>
+  
+ 
+  
+      {% if settings.product-show-info-link-1 or settings.product-show-info-link-2 %}
+    <div class="product-more-info">
+      {% if settings.product-show-info-link-1 %}
+        <p class="product-info-link {{ settings.product-info-link-icon-1 }}">
+          {% if settings.product-info-link-url-1.size > 0 %}<a href="{{ settings.product-info-link-url-1 }}">{% endif %}
+            {{ settings.product-info-link-text-1 }}
+          {% if settings.product-info-link-url-1.size > 0 %}</a>{% endif %}
+        </p>
+      {% endif %}
+
+      {% if settings.product-show-info-link-2 %}
+        <p class="product-info-link {{ settings.product-info-link-icon-2 }}">
+          {% if settings.product-info-link-url-2.size > 0 %}<a href="{{ settings.product-info-link-url-2 }}">{% endif %}
+            {{ settings.product-info-link-text-2 }}
+          {% if settings.product-info-link-url-2.size > 0 %}</a>{% endif %}
+        </p>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    {% if settings.product-show-share-buttons %}
+      {% include 'share-buttons' %}
+    {% endif %}
+</div><!-- close itemscope -->
+
+{% if settings.product-show-related %}
+
+  {% assign number_of_related_products_to_show = 4 %}
+
+  {% capture number_of_related_products_to_fetch %}
+    {{ number_of_related_products_to_show | plus: 1 }}
+  {% endcapture %}
+
+  {% if collection == null or collection.handle == 'frontpage' or collection.handle == 'all' %}
+      {% assign found_a_collection = false %}
+      {% for c in product.collections %}
+          {% if found_a_collection == false and c.handle != 'frontpage' and c.handle != 'all' %}
+              {% assign found_a_collection = true %}
+              {% assign collection = c %}
+          {% endif %}
+      {% endfor %}
+  {% endif %}
+
+  {% if collection.products.size > 1 %}
+    <div class="related-products">
+
+      <h3 class="section-title">
+        {{ 'products.related_products.header' | t }}
+      </h3>
+
+      <div class="collection-products">
+      {% assign current_product_found = false %}
+      {% for prod in collection.products limit: number_of_related_products_to_fetch %}
+        {% if prod.title == product.title %}
+          {% assign current_product_found = true %}
+        {% else %}
+          {% unless current_product_found == false and forloop.last %}
+
+              {% include 'product-list-item' %}
+
+          {% endunless %}
+        {% endif %}
+      {% endfor %}
+      </div>
+
+    </div>
+  {% endif %}
+
+{% endif %}
+
+
+<script>
+  // required for splitting variants
+  // see ProductView
+  window.productJSON = {{ product | json }};
+</script>
+      
+<style>
+ul.tabs {
+  border-bottom: 1px solid #DDDDDD;
+  display: block;
+  margin: 0 0 20px;
+  padding: 0;
+}
+ul.tabs li {
+  display: block;
+  float: left;
+  height: 30px;
+  margin-bottom: 0;
+  padding: 0;
+  width: auto;
+}
+ul.tabs li a {
+  -moz-border-bottom-colors: none;
+  -moz-border-image: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background: none repeat scroll 0 0 #F5F5F5;
+  border-color: #DDDDDD !important;
+  border-style: solid;
+  border-width: 1px 1px 0 1px;
+  display: block;
+  font-size: 13px;
+  height: 29px;
+  line-height: 30px;
+  margin: 0;
+  padding: 0 20px;
+  text-decoration: none;
+  width: auto;
+  color: #303030;
+  border-bottom:none !important;
+}
+ul.tabs li a.active {
+  background: none repeat scroll 0 0 #FFFFFF;
+  border-left-width: 1px;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  color: #111111;
+  height: 30px;
+  margin: 0 0 0 -1px;
+  padding-top: 4px;
+  position: relative;
+  top: -4px;
+}
+ul.tabs li:first-child a.active {
+  margin-left: 0;
+}
+ul.tabs li:first-child a {
+  border-top-left-radius: 2px;
+  border-width: 1px 1px 0;
+}
+ul.tabs li:last-child a {
+  border-top-right-radius: 2px;
+}
+ul.tabs:before, ul.tabs:after {
+  content: " ";
+  display: block;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+}
+ul.tabs:after {
+  clear: both;
+}
+</style>

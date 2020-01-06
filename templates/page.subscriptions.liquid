@@ -1,0 +1,343 @@
+<script>
+    productGroups = { 
+        'adult-mint': {
+            'title': 'Mint Infused Set',
+            'products': [
+                {
+                    'title': 'Annual Plan',
+                    'recurring-text': 'Delivered every 2 months',
+                    'data': {{ all_products['grin-cool-mint-toothpaste-toothbrush-set-annual'] | json }},
+                    'subscription': {{ all_products['grin-cool-mint-toothpaste-toothbrush-set-annual'].metafields.subscriptions | json }},
+                },
+                {
+                    'title': 'Bimonthly Plan',
+                    'recurring-text': 'Delivered every 2 months',
+                    'data': {{ all_products['grin-cool-mint-toothpaste-toothbrush-set-bi-monthly'] | json }},
+                    'subscription': {{ all_products['grin-cool-mint-toothpaste-toothbrush-set-bi-monthly'].metafields.subscriptions | json }},
+
+                },
+                {
+                    'title': 'Single Purchase',
+                    'recurring-text': 'One off purchase',
+                    'data': {{ all_products['grin-cool-mint-toothpaste-toothbrush-set'] | json }},
+                    'subscription': {{ all_products['grin-cool-mint-toothpaste-toothbrush-set'].metafields.subscriptions | json }},
+                }
+            ]
+        },
+        'adult-whitening-set': {
+            'title': 'Adult Whitening Set',
+            'products': [
+                {
+                    'title': 'Annual Plan',
+                    'recurring-text': 'Delivered every 2 months',
+                    'data': {{ all_products['grin-whitening-toothpaste-toothbrush-set-annual'] | json }},
+                    'subscription': {{ all_products['grin-whitening-toothpaste-toothbrush-set-annual'].metafields.subscriptions | json }},
+                },
+                {
+                    'title': 'Bimonthly Plan',
+                    'recurring-text': 'Delivered every 2 months',
+                    'data': {{ all_products['grin-whitening-toothpaste-toothbrush-set-bi-monthly'] | json }},
+                    'subscription': {{ all_products['grin-whitening-toothpaste-toothbrush-set-bi-monthly'].metafields.subscriptions | json }},
+
+                },
+                {
+                    'title': 'Single Purchase',
+                    'recurring-text': 'One off purchase',
+                    'data': {{ all_products['grin-whitening-toothpaste-toothbrush-set'] | json }},
+                    'subscription': {{ all_products['grin-whitening-toothpaste-toothbrush-set'].metafields.subscriptions | json }},
+                }
+            ]
+        },
+        'kids-strawberry-set': {
+            'title': 'Kids Strawberry Set',
+            'products': [
+                {
+                    'title': 'Annual Plan',
+                    'recurring-text': 'Delivered every 2 months',
+                    'data': {{ all_products['grin-kids-strawberry-toothpaste-toothbrush-set-annual'] | json }},
+                    'subscription': {{ all_products['grin-kids-strawberry-toothpaste-toothbrush-set-annual'].metafields.subscriptions | json }},
+                },
+                {
+                    'title': 'Bimonthly Plan',
+                    'recurring-text': 'Delivered every 2 months',
+                    'data': {{ all_products['grin-kids-strawberry-toothpaste-toothbrush-set-bi-monthly'] | json }},
+                    'subscription': {{ all_products['grin-kids-strawberry-toothpaste-toothbrush-set-bi-monthly'].metafields.subscriptions | json }},
+
+                },
+                {
+                    'title': 'Single Purchase',
+                    'recurring-text': 'One off purchase',
+                    'data': {{ all_products['grin-kids-strawberry-toothpaste-toothbrush-set'] | json }},
+                    'subscription': {{ all_products['grin-kids-strawberry-toothpaste-toothbrush-set'].metafields.subscriptions | json }},
+                }
+            ]
+        },
+        'kids-orange-set': {
+            'title': 'Kids Strawberry Set',
+            'products': [
+                {
+                    'title': 'Annual Plan',
+                    'recurring-text': 'Delivered every 2 months',
+                    'data': {{ all_products['grin-kids-orange-toothpaste-toothbrush-set-annual'] | json }},
+                    'subscription': {{ all_products['grin-kids-orange-toothpaste-toothbrush-set-annual'].metafields.subscriptions | json }},
+                },
+                {
+                    'title': 'Bimonthly Plan',
+                    'recurring-text': 'Delivered every 2 months',
+                    'data': {{ all_products['grin-kids-orange-toothpaste-toothbrush-set-bi-monthly'] | json }},
+                    'subscription': {{ all_products['grin-kids-orange-toothpaste-toothbrush-set-bi-monthly'].metafields.subscriptions | json }},
+
+                },
+                {
+                    'title': 'Single Purchase',
+                    'recurring-text': 'One off purchase',
+                    'data': {{ all_products['grin-kids-orange-toothpaste-toothbrush-set'] | json }},
+                    'subscription': {{ all_products['grin-kids-orange-toothpaste-toothbrush-set'].metafields.subscriptions | json }},
+                }
+            ]
+        },
+        '2-adults-2-kids': {
+            'title': '2 Adults + 2 Kids',
+            'products': [
+                {
+                    'title': 'Annual Plan',
+                    'recurring-text': 'Delivered every 2 months',
+                    'data': {{ all_products['2-adults-2-kids-annual'] | json }},
+                    'subscription': {{ all_products['2-adults-2-kids-annual'].metafields.subscriptions | json }},
+                },
+                {
+                    'title': 'Bimonthly Plan',
+                    'recurring-text': 'Delivered every 2 months',
+                    'data': {{ all_products['2-adults-2-kids-bi-monthly'] | json }},
+                    'subscription': {{ all_products['2-adults-2-kids-bi-monthly'].metafields.subscriptions | json }},
+
+                },
+                {
+                    'title': 'Single Purchase',
+                    'recurring-text': 'One off purchase',
+                    'data': {{ all_products['2-adults-2-kids'] | json }},
+                    'subscription': {{ all_products['2-adults-2-kids'].metafields.subscriptions | json }},
+                }
+            ]
+        },
+        '2-adults-4-kids': {
+            'title': '2 Adults + 4 Kids',
+            'products': [
+                {
+                    'title': 'Annual Plan',
+                    'recurring-text': 'Delivered every 2 months',
+                    'data': {{ all_products['2-adults-4-kids-annual'] | json }},
+                    'subscription': {{ all_products['2-adults-4-kids-annual'].metafields.subscriptions | json }},
+                },
+                {
+                    'title': 'Bimonthly Plan',
+                    'recurring-text': 'Delivered every 2 months',
+                    'data': {{ all_products['2-adults-4-kids-bi-monthly'] | json }},
+                    'subscription': {{ all_products['2-adults-4-kids-bi-monthly'].metafields.subscriptions | json }},
+
+                },
+                {
+                    'title': 'Single Purchase',
+                    'recurring-text': 'One off purchase',
+                    'data': {{ all_products['2-adults-4-kids'] | json }},
+                    'subscription': {{ all_products['2-adults-4-kids'].metafields.subscriptions | json }},
+                }
+            ]
+        },
+        'eco-toothbrush': {
+            'title': 'Eco Toothbrush',
+            'products': [
+                {
+                    'title': 'Annual Plan',
+                    'recurring-text': 'Delivered every 2 months',
+                    'data': {{ all_products['2-adults-4-kids-annual'] | json }},
+                    'subscription': {{ all_products['2-adults-4-kids-annual'].metafields.subscriptions | json }},
+                },
+                {
+                    'title': 'Bimonthly Plan',
+                    'recurring-text': 'Delivered every 2 months',
+                    'data': {{ all_products['2-adults-4-kids-bi-monthly'] | json }},
+                    'subscription': {{ all_products['2-adults-4-kids-bi-monthly'].metafields.subscriptions | json }},
+
+                },
+                {
+                    'title': 'Single Purchase',
+                    'recurring-text': 'One off purchase',
+                    'data': {{ all_products['2-adults-4-kids'] | json }},
+                    'subscription': {{ all_products['2-adults-4-kids'].metafields.subscriptions | json }},
+                }
+            ]
+        },
+        'whitening-toothpaste': {
+            'title': 'Whitening Toothpaste',
+            'products': [
+                {
+                    'title': 'Annual Plan',
+                    'recurring-text': 'Delivered every 2 months',
+                    'data': {{ all_products['2-adults-4-kids-annual'] | json }},
+                    'subscription': {{ all_products['2-adults-4-kids-annual'].metafields.subscriptions | json }},
+                },
+                {
+                    'title': 'Bimonthly Plan',
+                    'recurring-text': 'Delivered every 2 months',
+                    'data': {{ all_products['2-adults-4-kids-bi-monthly'] | json }},
+                    'subscription': {{ all_products['2-adults-4-kids-bi-monthly'].metafields.subscriptions | json }},
+
+                },
+                {
+                    'title': 'Single Purchase',
+                    'recurring-text': 'One off purchase',
+                    'data': {{ all_products['2-adults-4-kids'] | json }},
+                    'subscription': {{ all_products['2-adults-4-kids'].metafields.subscriptions | json }},
+                }
+            ]
+        },
+        'orange-toothpaste': {
+            'title': 'Orange Toothpaste',
+            'products': [
+                {
+                    'title': 'Annual Plan',
+                    'recurring-text': 'Delivered every 2 months',
+                    'data': {{ all_products['grin-kids-natural-toothpaste-orange-annual'] | json }},
+                    'subscription': {{ all_products['grin-kids-natural-toothpaste-orange-annual'].metafields.subscriptions | json }},
+                },
+                {
+                    'title': 'Bimonthly Plan',
+                    'recurring-text': 'Delivered every 2 months',
+                    'data': {{ all_products['grin-kids-natural-toothpaste-orange-bi-monthly'] | json }},
+                    'subscription': {{ all_products['grin-kids-natural-toothpaste-orange-bi-monthly'].metafields.subscriptions | json }},
+
+                },
+                {
+                    'title': 'Single Purchase',
+                    'recurring-text': 'One off purchase',
+                    'data': {{ all_products['grin-kids-natural-toothpaste-orange'] | json }},
+                    'subscription': {{ all_products['grin-kids-natural-toothpaste-orange'].metafields.subscriptions | json }},
+                }
+            ]
+        }
+    };
+
+    window.addEventListener('load', function () {
+        GrinSubscription.init(productGroups);
+    });
+
+</script>
+
+<h1 class="page-title subscription-page-title">{{ page.title }}</h1>
+
+  <div class="subscription-page-desc">
+    {{ page.content }}
+  </div>
+
+
+
+<h2 class="subscription-set-title">Adult Essentials</h2>
+<div class="subscription-set">
+    <div class="subscription-group loading" data-group="adult-mint">
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">Mint Infused Set</div>
+       
+    </div>
+
+
+    <div class="subscription-group" data-group="adult-whitening-set">
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">Whitening Set</div>
+    </div>
+</div>
+
+<h2 class="subscription-set-title">Kids Essentials</h2>
+<div class="subscription-set">
+    <div class="subscription-group" data-group='kids-orange-set'>
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">Orange Infused Set</div>
+    </div>
+
+
+    <div class="subscription-group" data-group='kids-strawberry-set'>
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">Strawberry Infused Set</div>
+    </div>
+</div>
+
+<h2 class="subscription-set-title">Family Essentials</h2>
+<div class="subscription-set">
+    <div class="subscription-group" data-group="2-adults-2-kids">
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">2 Adults + 2 Kids</div>
+    </div>
+
+
+    <div class="subscription-group" data-group="2-adults-4-kids">
+        <div class="subscription-group-img subscription-group-row">
+        </div>
+        <div class="subscription-group-name subscription-group-row">2 Adults + 4 Kids</div>
+    </div>
+</div>
+
+
+{% comment %}<h2 class="subscription-set-title">Individual Items</h2>
+<div class="subscription-set">
+    <div class="subscription-group" data-group="eco-toothbrush">
+        <div class="subscription-group-img subscription-group-row">
+            {{ 'subscription-placeholder.png' | asset_url | img_tag }}
+        </div>
+        <div class="subscription-group-name subscription-group-row">Eco Toothbrush</div>
+    </div>
+
+
+    <div class="subscription-group" data-group="whitening-toothpaste">
+        <div class="subscription-group-img subscription-group-row">
+            {{ 'subscription-placeholder.png' | asset_url | img_tag }}
+        </div>
+        <div class="subscription-group-name subscription-group-row">Whitening Toothpaste</div>
+    </div>
+</div>{% endcomment %}
+{% raw %}
+<script type="text/x-handlebars-template" id="product-group-template">
+    <div class="subscription-group" data-group="{{id}}">
+        <div class="subscription-group-img subscription-group-row">
+            {{{productImage selected}}}
+        </div>
+        <div class="subscription-group-name subscription-group-row">{{title}}</div>
+
+        {{#with selected}}
+            <div class="subscription-group-product" data-image="{{data.featured_image}}" data-product-id="{{data.id}}">
+               
+                <div class="subscription-group-plans subscription-group-row"">
+                    {{#each siblings}}
+                        <span class="subscription-group-plan {{cssClass title}} {{productSelectedClass this}}" data-product-id="{{data.id}}" data-group-id="{{groupId}}">{{title}}</span>
+                    {{/each}}
+                </div>
+
+                <div class="subscription-group-swatches subscription-group-row"">
+                    <div class="subscription-group-swatch-name">{{selectedVariant.title}}</div>
+                    <div class="subscription-group-swatches-items">
+                        {{#each data.variants}}
+                            <span class="subscription-group-swatch {{cssClass title}} {{variantSelectedClass this}}" data-colour-label="{{title}}" data-variant-id="{{id}}"></span>
+                        {{/each}}
+                    </div>
+                </div>
+
+                <div class="subscription-group-summary subscription-group-row"">
+                    <div class="subscription-group-total">
+                        <span class="subscription-group-total-value">${{formatPrice data.price}}</span> Today
+                    </div>
+                    <span>|</span>
+                    <div class="subscription-group-frequency">{{recurring-text}}</div>
+                </div>
+                <div class="subscription-group-actions">
+                    <button class="action button-addto" data-product-id="{{data.id}}"><span class="icon-plus">+</span><span>Cart</span></button><div class="add-to-cart-loader"></div>
+                </div>
+            </div>
+        {{/with}}
+
+    </div>
+</script>
+{% endraw %}

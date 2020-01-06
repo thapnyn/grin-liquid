@@ -1,0 +1,78 @@
+{% if collections["grin-natural-toothpaste"].products[0].title.size > 0 %}
+
+    {% assign product = collections["grin-natural-toothpaste"].products[0] %}
+    {% assign selectedVariant = product.selected_or_first_available_variant %}
+
+    <div class="product-details mobile">
+      <p class="product-price">
+        <span class="price product-{{product.id}}">
+          <span class="money">{{ selectedVariant.price | money }}</span>
+          <span class="original money">
+            {% if selectedVariant.compare_at_price > selectedVariant.price %}
+              {{ selectedVariant.compare_at_price | money }}
+            {% endif %}
+          </span>
+        </span>
+      </p>
+        <div><span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span></div>
+    </div>
+
+
+    <div class="home-left-right-cta">
+      <div class="product-details">
+        <p class="product-price">
+          <span class="price product-{{product.id}}">
+            <span class="money">{{ selectedVariant.price | money }}</span>
+            <span class="original money">
+              {% if selectedVariant.compare_at_price > selectedVariant.price %}
+                {{ selectedVariant.compare_at_price | money }}
+              {% endif %}
+            </span>
+          </span>
+        </p>
+          <div><span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span></div>
+      </div>
+
+    <form class="product-form" action="/cart/add" data-productid="{{product.id}}" method="post"> 
+{% if product.available %}{% include 'subscription-product' %}{% endif %} 
+
+      <div class="home-left-right-cta">
+        <label for="quantity">{{ 'general.quantity' | t }}</label>
+        <input type="text" name="quantity" id="quantity" value="1" />
+      </div>
+
+      <div class="add-to-cart">
+        {% if product.available %}
+          <div class="product-form-submit-wrap">
+            <input type="submit" value="{{ 'products.product.add_to_cart' | t }}" />
+            <div class="add-to-cart-loader"></div>
+          </div>
+          {% capture cart_link %}
+            <a href="/cart">{{ 'products.product.cart_link' | t }}</a>
+          {% endcapture %}
+          {% capture continue_link %}
+            <a href="/collections/all">{{ 'products.product.continue_link' | t }}</a>
+          {% endcapture %}
+          {% capture checkout_link %}
+            <a href="/checkout">{{ 'products.product.checkout_link' | t }}</a>
+          {% endcapture %}
+          {% capture product_item %}
+            <span class='added-product-name'></span>
+          {% endcapture %}
+          <p class="product-add-success-message">{{ 'products.product.success_html' | t: cart_link: cart_link, continue_link: continue_link, checkout_link: checkout_link, product: product_item  }}</p>
+          <p class="product-add-error-message"></p>
+        {% else %}
+          <input type="button" class="disabled" disabled="disabled" value="{{ 'products.product.sold_out' | t }}" />
+        {% endif %}
+      </div>
+      
+ 		</form>  
+    </div>
+
+    <script>
+      // required for splitting variants
+      // see ProductView
+      window.productJSON = {{ product | json }};
+    </script>
+
+{% endif %}
